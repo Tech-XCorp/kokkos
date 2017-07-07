@@ -248,20 +248,15 @@ int HostThreadTeamData::rendezvous( int64_t * const buffer
   // 2) give each spin wait location an int64_t[4] span
   //    so that it has its own cache line.
 
-  const int step = ( rendezvous_step % size_val_cycle ) + 1 ;
+  const int64_t step = ( rendezvous_step % size_val_cycle ) + 1 ;
 
-  rendezvous_step = step ;
+  rendezvous_step = static_cast<int>(step) ;
 
   // The leading int64_t[4] span is for thread 0 to write
   // and all other threads to read spin-wait.
   // sync_offset is the index into this array for this step.
 
   const int sync_offset = ( step & mask_mem_cycle ) + size_mem_cycle ;
-
-  union {
-    int64_t full ;
-    int8_t  byte[8] ;
-  } value ;
 
   if ( rank ) {
 
