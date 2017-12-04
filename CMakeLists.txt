@@ -75,7 +75,7 @@ TRIBITS_PACKAGE_DECL(Kokkos) # ENABLE_SHADOWING_WARNINGS)
 # in the previously define Kokkos_GEN_DIR
 # We need to copy them over to the correct place and source the cmake file
 
-if(NOT KOKKOS_LEGACY_TRIBITS)
+if (NOT "${KOKKOS_ARCH}" STREQUAL "NOT_SET")
   set(Kokkos_GEN_DIR ${CMAKE_BINARY_DIR})
   file(COPY "${Kokkos_GEN_DIR}/KokkosCore_config.h"
     DESTINATION "${CMAKE_CURRENT_BINARY_DIR}" USE_SOURCE_PERMISSIONS)
